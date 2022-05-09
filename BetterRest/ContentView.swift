@@ -17,6 +17,8 @@ struct ContentView: View {
     @State private var sleep = false
     @State var sleepTime = Date.now
     
+    let cups = [1,2,3,4,5,6,7,8]
+    
     static var defaultWakeTime: Date {
         var components = DateComponents()
         components.hour = 7
@@ -27,34 +29,54 @@ struct ContentView: View {
     var body: some View {
         NavigationView{
             Form{
-//                Spacer()
-                VStack(alignment: .leading, spacing: 0){
-                    Text("When do you want to wake up")
-                        .font(.headline)
+                Section(header: Text("When do you want to wake up")){
                     DatePicker("Wake up time: ",selection: $wakeTime , displayedComponents: .hourAndMinute)
                         .labelsHidden()
-//                        .padding(40)
                 }
-                .padding(10)
-//                Spacer()
-                VStack(alignment: .leading, spacing: 0){
-                    Text("How much sleep do you desire")
-                        .font(.headline)
-                    Stepper("Sleep amount: \(sleepAmount.formatted()) ", value: $sleepAmount, in: 4...12,step: 0.25)
-    //                    .labelsHidden()
-//                        .padding(40)
-                }
+                //                Spacer()
+                //                VStack(alignment: .leading, spacing: 0){
+                //                    Text("When do you want to wake up")
+                //                        .font(.headline)
+                //                    DatePicker("Wake up time: ",selection: $wakeTime , displayedComponents: .hourAndMinute)
+                //                        .labelsHidden()
+                ////                        .padding(40)
+                //                }
                 .padding(10)
                 
-//                Spacer()
-                VStack(alignment: .leading, spacing: 0){
-                    Text("Daily coffee intake")
-                        .font(.headline)
-                    Stepper(coffeeAmount == 1 ? "1 Cup" : "\(coffeeAmount) Cups", value: $coffeeAmount, in: 1...8)
-//                        .padding(40)
+                Section(header: Text("How much sleep do you desire")){
+                    Stepper("Sleep amount: \(sleepAmount.formatted()) ", value: $sleepAmount, in: 4...12,step: 0.25)
                 }
+                //                Spacer()
+                //                VStack(alignment: .leading, spacing: 0){
+                //                    Text("How much sleep do you desire")
+                //                        .font(.headline)
+                //                    Stepper("Sleep amount: \(sleepAmount.formatted()) ", value: $sleepAmount, in: 4...12,step: 0.25)
+                //    //                    .labelsHidden()
+                ////                        .padding(40)
+                //                }
                 .padding(10)
-//                Spacer()
+                
+                
+                Section(header: Text("Daily coffee intake")){
+                    //                    Stepper(coffeeAmount == 1 ? "1 Cup" : "\(coffeeAmount) Cups", value: $coffeeAmount, in: 1...8)
+                    Picker("How much coffee do you want", selection: $coffeeAmount){
+                        ForEach(cups, id: \.self){
+                            Text("\($0)")
+                        }
+                    }.labelsHidden()
+                    Text(coffeeAmount == 1 ? "1 Cup" : "\(coffeeAmount) Cups")
+                }
+                
+                
+                //                Spacer()
+                //                VStack(alignment: .leading, spacing: 0){
+                //                    Text("Daily coffee intake")
+                //                        .font(.headline)
+                //                    Stepper(coffeeAmount == 1 ? "1 Cup" : "\(coffeeAmount) Cups", value: $coffeeAmount, in: 1...8)
+                ////                        .padding(40)
+                //                }
+                .padding(10)
+                //                Spacer()
                 
                 
             }
